@@ -13,8 +13,7 @@
 
   <style>
     /* 
-      Reset box-sizing and remove default margins 
-      so everything is more predictable.
+      1) Reset box-sizing and remove default margins 
     */
     *, *::before, *::after {
       box-sizing: border-box;
@@ -29,11 +28,7 @@
     }
 
     /* 
-      Radial gradient background:
-      - White center
-      - Light gray middle
-      - Slightly darker gray at the edges
-      Adjust these if you want more/less contrast.
+      2) Radial gradient background
     */
     body {
       background: radial-gradient(
@@ -47,10 +42,10 @@
       justify-content: center;
     }
 
-    /* 
-      The container that centers your content.
-      We add some padding for small screens.
-      We also limit the max-width so it looks nice on large screens.
+    /*
+      3) Container:
+         - Centers content
+         - Limited max-width & padding
     */
     .container {
       text-align: center;
@@ -59,92 +54,94 @@
       padding: 1rem;
     }
 
-    /* LOGO:
-       - Restrict the max-width so it doesn't blow up on large screens.
-       - Auto height keeps proportions.
+    /* 
+      4) Logo: 
+         - Fluid width so it’s responsive
+         - clamp() ensures a min & max size
     */
     .logo {
-  /* This line makes the logo shrink/grow based on the viewport width, 
-     but still respect a minimum of 100px and a maximum of 250px */
-  width: clamp(100px, 30vw, 250px);
-  height: auto;
-  margin: 0 auto 2rem;
-  display: block;
-}
-
+      width: clamp(100px, 30vw, 250px);
+      height: auto;
+      margin: 0 auto 2rem;
+      display: block;
+    }
 
     /* 
-      We use a fluid font-size technique so the title shrinks/grows
-      based on the viewport width (using clamp).
-      - clamp(min, preferred, max).
+      5) Main Title:
+         - clamp() for responsive font size
     */
     .title {
       font-weight: 100; /* Montserrat Thin */
       color: #555;
       margin-bottom: 0.5rem;
       font-size: clamp(2rem, 8vw, 5rem); 
-      /* Explanation: 
-         - Minimum size = 2rem (32px if 1rem=16px).
-         - "Preferred" = 8vw (8% of viewport width).
-         - Maximum size = 5rem (80px if 1rem=16px).
-      */
     }
-
-    /* The smaller “Inc.” part next to the main title. */
     .title .inc {
-      font-size: 0.4em;  /* Scales relative to the parent’s font-size. */
+      font-size: 0.4em; /* smaller relative to the parent title */
       vertical-align: super;
       margin-left: 0.25rem;
     }
 
-    /* Subtitle: “We Are Earth” 
-       - italic 
-       - lighter color 
-       - some top margin so it sits lower than the title
+    /* 
+      6) Subtitle:
+         - italic
+         - smaller clamp() 
+         - spacing above
     */
     .subtitle {
       font-weight: 100;
-      color: #777;
       font-style: italic;
+      color: #777;
       margin-top: 1rem;
-
-      /* Also make it responsive, but smaller than the title. */
       font-size: clamp(1rem, 4vw, 1.5rem);
     }
 
-    /* 
-      OPTIONAL:
-      If you want to fine-tune or override for very small screens,
-      you can add media queries like:
+    /*
+      7) Discreet Contact Button:
+         - Looks like a simple text button
+         - mailto: link opens email client
+         - small transitions on hover
     */
-    @media (max-width: 500px) {
-      .title {
-        /* Slightly smaller for very narrow phones if needed */
-        font-size: clamp(1.8rem, 8vw, 3rem);
-      }
-      .subtitle {
-        margin-top: 0.75rem;
-      }
+    .contact-button {
+      display: inline-block;
+      background-color: #f3f3f3;
+      color: #555;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      margin-top: 2rem;
+      text-decoration: none; /* remove underlines */
+      font-size: 0.875rem;
+      transition: background-color 0.2s ease;
     }
-
+    .contact-button:hover {
+      background-color: #e3e3e3;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- LOGO: Replace with your actual PNG name/path -->
+    <!-- 1) Logo (PNG) -->
     <img
-      src="flower-logo.png"
+      src="images/flower-logo.png"
       alt="Flower Logo"
       class="logo"
     />
 
-    <!-- TITLE -->
+    <!-- 2) Title -->
     <h1 class="title">
       We Love Earth<span class="inc">Inc.</span>
     </h1>
 
-    <!-- SUBTITLE -->
+    <!-- 3) Subtitle -->
     <p class="subtitle">We Are Earth</p>
+
+    <!-- 4) A discreet contact button linking to your email -->
+    <a 
+      href="mailto:nyx@we-love.earth" 
+      class="contact-button"
+    >
+      Hi!
+    </a>
   </div>
 </body>
 </html>
