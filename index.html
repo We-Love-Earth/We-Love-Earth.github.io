@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>We Love Earth Inc.</title>
+  
+  <!-- Montserrat Thin (weight 100) -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* 
+      Reset box-sizing and remove default margins 
+      so everything is more predictable.
+    */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    /* 
+      Radial gradient background:
+      - White center
+      - Light gray middle
+      - Slightly darker gray at the edges
+      Adjust these if you want more/less contrast.
+    */
+    body {
+      background: radial-gradient(
+        circle at center,
+        #ffffff 40%, 
+        #dadada 70%, 
+        #bfbfbf 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 
+      The container that centers your content.
+      We add some padding for small screens.
+      We also limit the max-width so it looks nice on large screens.
+    */
+    .container {
+      text-align: center;
+      max-width: 90%;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    /* LOGO:
+       - Restrict the max-width so it doesn't blow up on large screens.
+       - Auto height keeps proportions.
+    */
+    .logo {
+  /* This line makes the logo shrink/grow based on the viewport width, 
+     but still respect a minimum of 100px and a maximum of 250px */
+  width: clamp(100px, 30vw, 250px);
+  height: auto;
+  margin: 0 auto 2rem;
+  display: block;
+}
+
+
+    /* 
+      We use a fluid font-size technique so the title shrinks/grows
+      based on the viewport width (using clamp).
+      - clamp(min, preferred, max).
+    */
+    .title {
+      font-weight: 100; /* Montserrat Thin */
+      color: #555;
+      margin-bottom: 0.5rem;
+      font-size: clamp(2rem, 8vw, 5rem); 
+      /* Explanation: 
+         - Minimum size = 2rem (32px if 1rem=16px).
+         - "Preferred" = 8vw (8% of viewport width).
+         - Maximum size = 5rem (80px if 1rem=16px).
+      */
+    }
+
+    /* The smaller “Inc.” part next to the main title. */
+    .title .inc {
+      font-size: 0.4em;  /* Scales relative to the parent’s font-size. */
+      vertical-align: super;
+      margin-left: 0.25rem;
+    }
+
+    /* Subtitle: “We Are Earth” 
+       - italic 
+       - lighter color 
+       - some top margin so it sits lower than the title
+    */
+    .subtitle {
+      font-weight: 100;
+      color: #777;
+      font-style: italic;
+      margin-top: 1rem;
+
+      /* Also make it responsive, but smaller than the title. */
+      font-size: clamp(1rem, 4vw, 1.5rem);
+    }
+
+    /* 
+      OPTIONAL:
+      If you want to fine-tune or override for very small screens,
+      you can add media queries like:
+    */
+    @media (max-width: 500px) {
+      .title {
+        /* Slightly smaller for very narrow phones if needed */
+        font-size: clamp(1.8rem, 8vw, 3rem);
+      }
+      .subtitle {
+        margin-top: 0.75rem;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- LOGO: Replace with your actual PNG name/path -->
+    <img
+      src="flower-logo.png"
+      alt="Flower Logo"
+      class="logo"
+    />
+
+    <!-- TITLE -->
+    <h1 class="title">
+      We Love Earth<span class="inc">Inc.</span>
+    </h1>
+
+    <!-- SUBTITLE -->
+    <p class="subtitle">We Are Earth</p>
+  </div>
+</body>
+</html>
