@@ -1,0 +1,497 @@
+:root {
+    --deep-space-blue: #1a1b2f;
+    --cosmic-purple: #5d4e6d;
+    --ethereal-teal: #7ee6d2;
+    --starlight-white: #f7f7ff;
+    --subtle-gold: #d4af37;
+    --transition-standard: 800ms ease-in-out;
+    --transition-quick: 400ms ease-in-out;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--deep-space-blue);
+    color: var(--starlight-white);
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('flower-background.png') repeat;
+    opacity: 0.1;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.landing-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.sacred-geometry {
+    width: 240px;
+    height: 240px;
+    position: relative;
+    animation: rotate 60s linear infinite, fadeIn 2s forwards;
+    margin-bottom: 0;
+    opacity: 0;
+}
+
+.title-wrapper {
+    position: relative;
+    text-align: center;
+    display: inline-block;
+}
+
+.title-primary {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 76.8px;
+    font-weight: 100;
+    letter-spacing: 4px;
+    opacity: 0;
+    animation: fadeInLetters 2s forwards;
+    text-transform: none;
+}
+
+.inc {
+    position: absolute;
+    top: 0;
+    right: -40px;
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    opacity: 0;
+    animation: fadeInLetters 2s forwards 0.5s;
+}
+
+.main-titles {
+    text-align: center;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.title-secondary {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 48px;
+    font-weight: 200;
+    letter-spacing: 3px;
+    opacity: 0;
+    animation: fadeInLetters 2s forwards 2s, pulsate 4s ease-in-out infinite 4s;
+    text-transform: none;
+}
+
+.floating-messages,
+.message {
+    display: none;
+}
+
+.pillars {
+    display: flex;
+    justify-content: space-around;
+    padding: 4rem 2rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.pillar {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: var(--transition-standard);
+}
+
+.pillar:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sacred-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    transition: var(--transition-standard);
+}
+
+.access-button {
+    margin-top: 2rem;
+    background: transparent;
+    color: var(--starlight-white);
+    padding: 1.2rem 3rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: var(--transition-standard);
+    border-radius: 30px;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 1s forwards 2s;
+    border: none;
+    outline: none;
+}
+
+.access-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid var(--subtle-gold);
+    border-radius: 30px;
+    animation: drawBorder 2s forwards 2s;
+    clip-path: inset(0 100% 0 0);
+}
+
+.access-button:hover {
+    background: rgba(212, 175, 55, 0.1);
+    box-shadow: 0 0 20px var(--subtle-gold);
+    transform: translateY(-2px);
+}
+
+.access-button:active {
+    transform: translateY(1px);
+}
+
+.sacred-portal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, var(--subtle-gold) 0%, rgba(212, 175, 55, 0.3) 70%, transparent 100%);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1000;
+    box-shadow: 0 0 30px var(--subtle-gold);
+}
+
+.portal-active .sacred-portal {
+    animation: portalOpen 2.5s ease-out forwards;
+}
+
+.sacred-form-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--deep-space-blue);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.sacred-form-container.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sacred-form {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 3rem;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    opacity: 0;
+}
+
+.form-builder {
+    opacity: 0;
+}
+
+.sacred-form.active .form-builder {
+    animation: formAppear 1s forwards 0.5s;
+}
+
+.input-builder {
+    position: absolute;
+    top: 0;
+    left: -10px;
+    width: 2px;
+    height: 0;
+    background: var(--subtle-gold);
+    opacity: 0;
+}
+
+.sacred-form.active .form-group:nth-child(1) .input-builder {
+    animation: buildElement 0.8s forwards 1s;
+}
+
+.sacred-form.active .form-group:nth-child(2) .input-builder {
+    animation: buildElement 0.8s forwards 1.4s;
+}
+
+.sacred-form.active .form-group:nth-child(3) .input-builder {
+    animation: buildElement 0.8s forwards 1.8s;
+}
+
+.button-builder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--subtle-gold);
+    border-radius: 30px;
+    transform: scale(0);
+    opacity: 0;
+}
+
+.sacred-form.active .button-builder {
+    animation: buildButton 0.8s forwards 2.2s;
+}
+
+.button-wrapper {
+    position: relative;
+    margin-top: 2rem;
+}
+
+.typing-messages {
+    position: relative;
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+    min-height: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100;
+    font-size: 1.5rem;
+    color: var(--subtle-gold);
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    opacity: 0;
+    margin: 0.5rem 0;
+    animation: fadeIn 1s forwards 3s;
+}
+
+.typing-text {
+    display: inline;
+    position: relative;
+    letter-spacing: 2px;
+    opacity: 1;
+}
+
+.cursor {
+    display: inline-block;
+    width: 2px;
+    margin-left: 2px;
+    animation: blink 1s step-end infinite;
+    color: var(--subtle-gold);
+    opacity: 1;
+    font-weight: 100;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fadeInLetters {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes pulsate {
+    0% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.02);
+    }
+    100% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+}
+
+@keyframes drawBorder {
+    0% {
+        clip-path: inset(0 100% 0 0);
+    }
+    100% {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes portalOpen {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    40% {
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(50);
+        opacity: 0;
+    }
+}
+
+@keyframes formAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes buildElement {
+    0% {
+        height: 0;
+        opacity: 0;
+    }
+    50% {
+        height: 100%;
+        opacity: 1;
+    }
+    100% {
+        height: 100%;
+        opacity: 0;
+        transform: translateX(10px);
+    }
+}
+
+@keyframes buildButton {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    20% { opacity: 0.8; }
+    80% { opacity: 0.8; }
+    100% { opacity: 0; }
+}
+
+@media (max-width: 768px) {
+    .title-primary {
+        font-size: 36px;
+        letter-spacing: 2px;
+    }
+    
+    .title-primary .inc {
+        font-size: 16px;
+    }
+    
+    .title-secondary {
+        font-size: 28px;
+        letter-spacing: 1.5px;
+    }
+    
+    .access-button {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+    }
+    
+    .sacred-geometry {
+        width: 180px;
+        height: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    .title-primary {
+        font-size: 28px;
+        letter-spacing: 1.5px;
+    }
+    
+    .title-primary .inc {
+        font-size: 14px;
+    }
+    
+    .title-secondary {
+        font-size: 22px;
+        letter-spacing: 1px;
+    }
+    
+    .main-titles {
+        margin-top: 1rem;
+        gap: 1rem;
+    }
+    
+    .access-button {
+        margin-top: 1.5rem;
+        padding: 0.8rem 1.6rem;
+    }
+    
+    .sacred-geometry {
+        width: 140px;
+        height: 140px;
+    }
+}

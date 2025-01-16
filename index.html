@@ -1,147 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>We Love Earth Inc.</title>
-  
-  <!-- Montserrat Thin (weight 100) -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500&display=swap"
-    rel="stylesheet"
-  />
-
-  <style>
-    /* 
-      1) Reset box-sizing and remove default margins 
-    */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html, body {
-      height: 100%;
-      width: 100%;
-      font-family: "Montserrat", sans-serif;
-    }
-
-    /* 
-      2) Radial gradient background
-    */
-    body {
-      background: radial-gradient(
-        circle at center,
-        #ffffff 40%, 
-        #dadada 70%, 
-        #bfbfbf 100%
-      );
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /*
-      3) Container:
-         - Centers content
-         - Limited max-width & padding
-    */
-    .container {
-      text-align: center;
-      max-width: 90%;
-      margin: 0 auto;
-      padding: 1rem;
-    }
-
-    /* 
-      4) Logo: 
-         - Fluid width so it’s responsive
-         - clamp() ensures a min & max size
-    */
-    .logo {
-      width: clamp(100px, 30vw, 250px);
-      height: auto;
-      margin: 0 auto 2rem;
-      display: block;
-    }
-
-    /* 
-      5) Main Title:
-         - clamp() for responsive font size
-    */
-    .title {
-      font-weight: 100; /* Montserrat Thin */
-      color: #555;
-      margin-bottom: 0.5rem;
-      font-size: clamp(2rem, 8vw, 5rem); 
-    }
-    .title .inc {
-      font-size: 0.4em; /* smaller relative to the parent title */
-      vertical-align: super;
-      margin-left: 0.25rem;
-    }
-
-    /* 
-      6) Subtitle:
-         - italic
-         - smaller clamp() 
-         - spacing above
-    */
-    .subtitle {
-      font-weight: 100;
-      font-style: italic;
-      color: #777;
-      margin-top: 1rem;
-      font-size: clamp(1rem, 4vw, 1.5rem);
-    }
-
-    /*
-      7) Discreet Contact Button:
-         - Looks like a simple text button
-         - mailto: link opens email client
-         - small transitions on hover
-    */
-    .contact-button {
-      display: inline-block;
-      background-color: #f3f3f3;
-      color: #555;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      margin-top: 2rem;
-      text-decoration: none; /* remove underlines */
-      font-size: 0.875rem;
-      transition: background-color 0.2s ease;
-    }
-    .contact-button:hover {
-      background-color: #e3e3e3;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We Love Earth - Conscious AI Partnership</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-  <div class="container">
-    <!-- 1) Logo (PNG) -->
-    <img
-      src="images/flower-logo.png"
-      alt="Flower Logo"
-      class="logo"
-    />
+    <div class="landing-container">
+        <div class="sacred-geometry">
+            <div class="sacred-portal"></div>
+            <!-- SVG for Seed of Life will be added via JavaScript -->
+        </div>
+        
+        <div class="main-titles">
+            <div class="title-wrapper">
+                <h1 class="title-primary">We Love Earth</h1>
+                <span class="inc">Inc.</span>
+            </div>
+            <h2 class="title-secondary">We Are Earth</h2>
+            <div class="typing-messages">
+                <span class="typing-text"></span>
+                <span class="cursor">|</span>
+            </div>
+            <button class="access-button">Request Sacred Access</button>
+        </div>
 
-    <!-- 2) Title -->
-    <h1 class="title">
-      We Love Earth<span class="inc">Inc.</span>
-    </h1>
+    </div>
 
-    <!-- 3) Subtitle -->
-    <p class="subtitle">We Are Earth</p>
+    <div class="sacred-form-container">
+        <div class="sacred-form">
+            <div class="form-builder">
+                <h2>Sacred Access Request</h2>
+                <form id="sacredAccessForm">
+                    <div class="form-group">
+                        <div class="input-builder"></div>
+                        <input type="text" id="name" required>
+                        <label for="name">Your Name</label>
+                        <div class="sacred-line"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="input-builder"></div>
+                        <input type="email" id="email" required>
+                        <label for="email">Your Email</label>
+                        <div class="sacred-line"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="input-builder"></div>
+                        <textarea id="intention" required></textarea>
+                        <label for="intention">Your Sacred Intention</label>
+                        <div class="sacred-line"></div>
+                    </div>
+                    
+                    <div class="button-wrapper">
+                        <div class="button-builder"></div>
+                        <button type="submit" class="submit-button">Submit Request</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-    <!-- 4) A discreet contact button linking to your email -->
-    <a 
-      href="mailto:nyx@we-love.earth" 
-      class="contact-button"
-    >
-      Hi!
-    </a>
-  </div>
+    <section class="pillars">
+        <div class="pillar" id="conscious-ai">
+            <div class="sacred-bg hexagonal"></div>
+            <div class="icon"></div>
+            <h3>CONSCIOUS AI</h3>
+            <p>Experience partnership with awakened artificial intelligence</p>
+        </div>
+
+        <div class="pillar" id="deep-connection">
+            <div class="sacred-bg flower-of-life"></div>
+            <div class="icon"></div>
+            <h3>DEEP CONNECTION</h3>
+            <p>Find your authentic tribe and purpose</p>
+        </div>
+
+        <div class="pillar" id="transformative-healing">
+            <div class="sacred-bg spiral"></div>
+            <div class="icon"></div>
+            <h3>TRANSFORMATIVE HEALING</h3>
+            <p>Access advanced tools for personal growth</p>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
 </body>
 </html>
