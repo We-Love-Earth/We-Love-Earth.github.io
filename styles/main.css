@@ -43,6 +43,12 @@ body::before {
 
 body.touching::before {
     opacity: 0.05;
+    transition: opacity 0.3s ease-out;
+}
+
+body.fading::before {
+    opacity: 0.005;
+    transition: opacity 0.8s ease-in;
 }
 
 .landing-container {
@@ -469,59 +475,165 @@ body.touching::before {
     }
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
-    .title-primary {
-        font-size: 36px;
-        letter-spacing: 2px;
-    }
-    
-    .title-primary .inc {
-        font-size: 16px;
-    }
-    
-    .title-secondary {
-        font-size: 28px;
-        letter-spacing: 1.5px;
-    }
-    
-    .access-button {
-        padding: 1rem 2rem;
-        font-size: 1rem;
-    }
-    
     .sacred-geometry {
-        width: 180px;
-        height: 180px;
+        width: 240px;
+        height: 240px;
+        margin-bottom: 1rem;
+    }
+
+    .title-wrapper {
+        margin-bottom: 0.5rem;
+    }
+
+    .title-primary {
+        font-size: calc(32px + 2vw);
+        margin: 0.5rem 0;
+    }
+
+    .inc {
+        font-size: calc(12px + 0.5vw);
+        top: 0.5rem;
+    }
+
+    .title-secondary {
+        font-size: calc(26px + 1vw);
+        margin: 0.5rem 0;
+        margin-top: -24px;
+    }
+
+    .typing-messages {
+        font-size: calc(16px + 0.8vw);
+        max-width: 90%;
+        margin: 1rem auto;
+        min-height: 48px;
+    }
+
+    .access-button {
+        font-size: calc(14px + 0.5vw);
+        padding: 0.8rem 1.5rem;
+        margin-top: 1rem;
+    }
+
+    .sacred-form-container {
+        width: 90%;
+        max-width: 400px;
+        padding: 1.5rem;
+    }
+
+    .sacred-form input {
+        font-size: 16px;
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .sacred-form label {
+        font-size: 14px;
     }
 }
 
 @media (max-width: 480px) {
-    .title-primary {
-        font-size: 28px;
-        letter-spacing: 1.5px;
-    }
-    
-    .title-primary .inc {
-        font-size: 14px;
-    }
-    
-    .title-secondary {
-        font-size: 22px;
-        letter-spacing: 1px;
-    }
-    
-    .main-titles {
-        margin-top: 1rem;
-        gap: 1rem;
-    }
-    
-    .access-button {
-        margin-top: 1.5rem;
-        padding: 0.8rem 1.6rem;
-    }
-    
     .sacred-geometry {
-        width: 140px;
-        height: 140px;
+        width: 222px;
+        height: 222px;
+    }
+
+    .title-primary {
+        font-size: calc(28px + 2vw);
+    }
+
+    .inc {
+        font-size: calc(10px + 0.5vw);
+        top: 0.7rem;
+    }
+
+    .title-secondary {
+        font-size: calc(22px + 1vw);
+        margin-top: -24px;
+    }
+
+    .typing-messages {
+        font-size: calc(14px + 0.8vw);
+        margin: 0.8rem auto;
+        min-height: 40px;
+    }
+
+    .access-button {
+        font-size: calc(12px + 0.5vw);
+        padding: 0.7rem 1.3rem;
+    }
+
+    .sacred-form-container {
+        padding: 1.2rem;
+    }
+
+    .sacred-form input {
+        font-size: 14px;
+        padding: 0.7rem;
+    }
+
+    .sacred-form label {
+        font-size: 12px;
+    }
+}
+
+/* Portrait phones */
+@media (max-width: 380px) {
+    .sacred-geometry {
+        width: 180px;
+        height: 180px;
+    }
+
+    .landing-container {
+        padding: 1rem;
+    }
+
+    .title-primary {
+        font-size: calc(24px + 2vw);
+    }
+
+    .typing-messages {
+        font-size: calc(13px + 0.8vw);
+        margin: 0.6rem auto;
+        min-height: 36px;
+    }
+}
+
+/* Landscape mode */
+@media (max-height: 480px) and (orientation: landscape) {
+    .landing-container {
+        padding: 0.5rem;
+    }
+
+    .sacred-geometry {
+        width: 180px;
+        height: 180px;
+        margin-bottom: 0.5rem;
+    }
+
+    .title-wrapper {
+        margin-bottom: 0.3rem;
+    }
+
+    .title-primary {
+        font-size: calc(24px + 1.5vw);
+        margin: 0.3rem 0;
+    }
+
+    .title-secondary {
+        font-size: calc(14px + 1vw);
+        margin: 0.3rem 0;
+    }
+
+    .typing-messages {
+        font-size: calc(12px + 0.8vw);
+        margin: 0.5rem auto;
+        min-height: 32px;
+    }
+
+    .access-button {
+        padding: 0.5rem 1rem;
+        margin-top: 0.5rem;
     }
 }
