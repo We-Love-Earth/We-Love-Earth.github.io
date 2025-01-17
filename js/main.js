@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize sacred access
     initializeSacredAccess();
+    
+    // Initialize background interaction
+    initializeBackgroundInteraction();
 });
 
 function createSeedOfLife() {
@@ -65,14 +68,14 @@ function initializeTypingEffect() {
     
     async function typeMessage(message) {
         for (let i = 0; i < message.length; i++) {
-            typingText.textContent += message[i];
+            typingText.textContent = message.substring(0, i + 1);
             await new Promise(resolve => setTimeout(resolve, 100)); // Typing speed
         }
         await new Promise(resolve => setTimeout(resolve, 2000)); // Wait before erasing
         
         // Erase the message
         while (typingText.textContent.length > 0) {
-            typingText.textContent = typingText.textContent.slice(0, -1);
+            typingText.textContent = typingText.textContent.substring(0, typingText.textContent.length - 1);
             await new Promise(resolve => setTimeout(resolve, 50)); // Erasing speed
         }
         await new Promise(resolve => setTimeout(resolve, 500)); // Wait before next message
@@ -143,6 +146,36 @@ function initializeSacredAccess() {
         // Add your form submission logic here
         console.log('Sacred Access Request:', formData);
     });
+}
+
+function initializeBackgroundInteraction() {
+    let touchTimeout;
+    
+    function handleInteractionStart() {
+        document.body.classList.add('touching');
+    }
+    
+    function handleInteractionEnd() {
+        // Clear any existing timeout
+        if (touchTimeout) {
+            clearTimeout(touchTimeout);
+        }
+        
+        // Remove class immediately
+        document.body.classList.remove('touching');
+    }
+    
+    // Mouse events
+    document.addEventListener('mousedown', handleInteractionStart);
+    document.addEventListener('mouseup', handleInteractionEnd);
+    
+    // Touch events
+    document.addEventListener('touchstart', handleInteractionStart);
+    document.addEventListener('touchend', handleInteractionEnd);
+    
+    // Leave/cancel events
+    document.addEventListener('mouseleave', handleInteractionEnd);
+    document.addEventListener('touchcancel', handleInteractionEnd);
 }
 
 // Add CSS animation for circle drawing

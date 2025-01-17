@@ -4,7 +4,7 @@
     --ethereal-teal: #7ee6d2;
     --starlight-white: #f7f7ff;
     --subtle-gold: #d4af37;
-    --transition-standard: 800ms ease-in-out;
+    --transition-standard: all 0.3s ease;
     --transition-quick: 400ms ease-in-out;
 }
 
@@ -15,36 +15,45 @@
 }
 
 body {
-    background: var(--deep-space-blue);
-    color: var(--starlight-white);
-    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
+    background: rgb(11, 0, 27);
+    animation: backgroundFlow 60s linear infinite;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
 }
 
 body::before {
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('flower-background.png') repeat;
-    opacity: 0.1;
-    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/TheMin-Flow.png');
+    background-repeat: repeat;
+    opacity: 0.005;
     pointer-events: none;
+    z-index: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+body.touching::before {
+    opacity: 0.05;
 }
 
 .landing-container {
+    position: relative;
+    z-index: 1;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
     overflow: hidden;
-    z-index: 2;
 }
 
 .sacred-geometry {
@@ -311,7 +320,7 @@ body::before {
 .cursor {
     display: inline-block;
     width: 2px;
-    margin-left: 2px;
+    margin-left: 0;
     animation: blink 1s step-end infinite;
     color: var(--subtle-gold);
     opacity: 1;
@@ -437,6 +446,27 @@ body::before {
     20% { opacity: 0.8; }
     80% { opacity: 0.8; }
     100% { opacity: 0; }
+}
+
+@keyframes backgroundFlow {
+    0% {
+        background: rgb(11, 0, 27);  /* Deep Purple */
+    }
+    20% {
+        background: rgb(27, 0, 11);  /* Deep Crimson */
+    }
+    40% {
+        background: rgb(27, 11, 0);  /* Deep Auburn */
+    }
+    60% {
+        background: rgb(11, 27, 0);  /* Deep Forest */
+    }
+    80% {
+        background: rgb(0, 27, 11);  /* Deep Emerald */
+    }
+    100% {
+        background: rgb(11, 0, 27);  /* Back to Deep Purple */
+    }
 }
 
 @media (max-width: 768px) {
