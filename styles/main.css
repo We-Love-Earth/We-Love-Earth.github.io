@@ -24,6 +24,27 @@ body {
     animation: backgroundFlow 60s linear infinite;
     color: white;
     font-family: 'Montserrat', sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+body.touching {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+body.form-open {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+@keyframes backgroundPulse {
+    0% {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+    50% {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    100% {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
 }
 
 body::before {
@@ -53,13 +74,12 @@ body.fading::before {
 
 .landing-container {
     position: relative;
-    z-index: 1;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    padding-bottom: 15vh;
 }
 
 .sacred-geometry {
@@ -105,6 +125,7 @@ body.fading::before {
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
+    margin-bottom: 5vh;
 }
 
 .title-secondary {
@@ -125,29 +146,76 @@ body.fading::before {
 .pillars {
     display: flex;
     justify-content: space-around;
-    padding: 4rem 2rem;
-    flex-wrap: wrap;
+    align-items: stretch;
+    padding: 2rem;
     gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    margin-top: -15vh;
 }
 
 .pillar {
+    flex: 1;
     position: relative;
-    width: 300px;
-    height: 400px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
+    min-height: 400px;
     padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    transition: var(--transition-standard);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(0, 0, 0, 0.3);
 }
 
 .pillar:hover {
     transform: translateY(-10px);
-    background: rgba(255, 255, 255, 0.1);
+}
+
+.pillar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        rgba(0, 0, 0, 0.7) 100%
+    );
+    z-index: 1;
+    transition: opacity 0.5s ease;
+}
+
+.pillar:hover::before {
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0.3) 50%,
+        rgba(0, 0, 0, 0.6) 100%
+    );
+}
+
+.pillar-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.pillar-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.1);
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: saturate(0.8) brightness(0.8);
+}
+
+.pillar:hover .pillar-image img {
+    transform: scale(1);
+    filter: saturate(1) brightness(0.9);
 }
 
 .sacred-bg {
@@ -156,8 +224,109 @@ body.fading::before {
     left: 0;
     width: 100%;
     height: 100%;
+    z-index: 2;
     opacity: 0.1;
-    transition: var(--transition-standard);
+    mix-blend-mode: soft-light;
+    transition: all 0.5s ease;
+}
+
+.pillar:hover .sacred-bg {
+    opacity: 0.15;
+    transform: scale(1.05);
+}
+
+.content-wrapper {
+    position: relative;
+    z-index: 3;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: radial-gradient(
+        circle at center,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.3) 100%
+    );
+    transition: background 0.5s ease;
+}
+
+.pillar:hover .content-wrapper {
+    background: radial-gradient(
+        circle at center,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.2) 100%
+    );
+}
+
+.text-content {
+    margin-top: 2rem;
+    transform: translateY(20px);
+    opacity: 0.9;
+    transition: all 0.5s ease;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.pillar:hover .text-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.pillar h3 {
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+    letter-spacing: 3px;
+    line-height: 1.4;
+}
+
+.pillar .highlight {
+    font-weight: 400;
+    color: #f0f0f0;
+}
+
+.pillar p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0.3rem 0;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+.pillar p.emphasis {
+    font-size: 1.3rem;
+    color: #f0f0f0;
+    font-weight: 400;
+    margin-top: 0.2rem;
+}
+
+.sacred-line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    margin: 2rem auto 0;
+    position: relative;
+}
+
+.sacred-line::before,
+.sacred-line::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.sacred-line::before {
+    left: 0;
+}
+
+.sacred-line::after {
+    right: 0;
 }
 
 .access-button {
@@ -225,36 +394,176 @@ body.fading::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--deep-space-blue);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.5s;
-    display: flex;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
     justify-content: center;
     align-items: center;
-    z-index: 999;
+    z-index: 1000;
+    transition: all 0.5s ease;
 }
 
-.sacred-form-container.active {
-    opacity: 1;
-    visibility: visible;
+.sacred-form-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/flower-background.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    z-index: -1;
+    animation: flowerPulse 4s infinite ease-in-out;
+}
+
+@keyframes flowerPulse {
+    0% {
+        opacity: 0.05;
+    }
+    50% {
+        opacity: 0.15;
+    }
+    100% {
+        opacity: 0.05;
+    }
 }
 
 .sacred-form {
-    background: rgba(255, 255, 255, 0.02);
-    padding: 3rem;
+    background-color: rgba(255, 255, 255, 1);
     border-radius: 15px;
     width: 90%;
-    max-width: 500px;
+    max-width: 800px;
+    height: 90vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
     opacity: 0;
+    transform: scale(0.9) translateY(20px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.form-builder {
-    opacity: 0;
+.sacred-form-container.form-visible {
+    background: rgba(0, 0, 0, 0.85);
 }
 
-.sacred-form.active .form-builder {
-    animation: formAppear 1s forwards 0.5s;
+.sacred-form.form-active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+@keyframes formGlow {
+    0% {
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 50px rgba(255, 255, 255, 0.4);
+    }
+    100% {
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    }
+}
+
+.sacred-form.form-active {
+    animation: formGlow 3s infinite;
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #1a1a1a;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.form-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    animation: headerGlow 3s infinite;
+}
+
+@keyframes headerGlow {
+    0% {
+        opacity: 0.3;
+        transform: translateX(-100%);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.3;
+        transform: translateX(100%);
+    }
+}
+
+.form-header h2 {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease;
+}
+
+.sacred-form.form-active .form-header h2 {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.close-form-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0 10px;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: rotate(-90deg);
+}
+
+.sacred-form.form-active .close-form-btn {
+    opacity: 1;
+    transform: rotate(0);
+}
+
+.close-form-btn:hover {
+    color: #ddd;
+    transform: rotate(90deg);
+}
+
+.form-iframe-wrapper {
+    flex: 1;
+    position: relative;
+    overflow: auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease 0.3s;
+}
+
+.sacred-form.form-active .form-iframe-wrapper {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.form-iframe-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: white;
 }
 
 .input-builder {
@@ -475,8 +784,130 @@ body.fading::before {
     }
 }
 
+.scroll-indicator {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 3s;
+    z-index: 10;
+}
+
+.scroll-text {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.sacred-scroll {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0)
+    );
+    position: relative;
+    overflow: hidden;
+}
+
+.scroll-dot {
+    width: 3px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    position: absolute;
+    left: -1px;
+    animation: scrollDown 2s cubic-bezier(0.76, 0, 0.3, 1) infinite;
+}
+
+@keyframes scrollDown {
+    0% {
+        top: -4px;
+        opacity: 1;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        top: 60px;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.scroll-indicator:hover .sacred-scroll {
+    background: linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0.7),
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0)
+    );
+    transition: all 0.3s ease;
+}
+
+/* Hide scroll indicator when user has scrolled significantly */
+@media (max-height: 700px) {
+    .scroll-indicator {
+        display: none;
+    }
+}
+
+.landing-container {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.scroll-indicator:hover .scroll-text {
+    color: rgba(255, 255, 255, 1);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+.scroll-indicator:hover .sacred-scroll {
+    background: linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0)
+    );
+    transition: all 0.3s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
+    .pillars {
+        flex-direction: column;
+        padding: 2rem 1rem;
+    }
+
+    .pillar {
+        min-height: 300px;
+    }
+
     .sacred-geometry {
         width: 240px;
         height: 240px;

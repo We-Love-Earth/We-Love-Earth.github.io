@@ -140,47 +140,57 @@ function initializeParallax() {
 function initializeSacredAccess() {
     const accessButton = document.querySelector('.access-button');
     const formContainer = document.querySelector('.sacred-form-container');
-    const sacredForm = document.querySelector('.sacred-form');
+    const closeButton = document.querySelector('.close-form-btn');
     const sacredGeometry = document.querySelector('.sacred-geometry');
-    
-    accessButton.addEventListener('click', () => {
-        // Start portal animation
-        sacredGeometry.classList.add('portal-active');
-        
-        // After portal animation, show form container
-        setTimeout(() => {
-            formContainer.classList.add('active');
+    const sacredForm = document.querySelector('.sacred-form');
+
+    if (accessButton && formContainer) {
+        accessButton.addEventListener('click', () => {
+            // Start portal animation
+            sacredGeometry.classList.add('portal-active');
             
-            // Add form with building animation
+            // Trigger background effect
+            document.body.classList.add('touching');
+            
+            // After portal animation, show form container with fade
             setTimeout(() => {
-                sacredForm.classList.add('active');
+                document.body.classList.add('form-open');
+                formContainer.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
                 
-                // Animate form elements sequentially
-                const formGroups = document.querySelectorAll('.form-group');
-                formGroups.forEach((group, index) => {
-                    setTimeout(() => {
-                        group.classList.add('active');
-                    }, 1000 + (index * 400));
-                });
+                // Add a small delay before starting form animation
+                setTimeout(() => {
+                    formContainer.classList.add('form-visible');
+                    sacredForm.classList.add('form-active');
+                }, 100);
+            }, 2000); // Wait for portal animation
+        });
+    }
+
+    if (closeButton) {
+        const closeForm = () => {
+            sacredForm.classList.remove('form-active');
+            formContainer.classList.remove('form-visible');
+            
+            // Wait for fade out animation before hiding
+            setTimeout(() => {
+                document.body.classList.remove('touching', 'form-open');
+                formContainer.style.display = 'none';
+                document.body.style.overflow = '';
+                // Reset portal animation
+                sacredGeometry.classList.remove('portal-active');
             }, 500);
-        }, 2000);
-    });
-    
-    // Handle form submission
-    const form = document.getElementById('sacredAccessForm');
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Collect form data
-        const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            intention: document.getElementById('intention').value
         };
-        
-        // Add your form submission logic here
-        console.log('Sacred Access Request:', formData);
-    });
+
+        closeButton.addEventListener('click', closeForm);
+
+        // Close form when clicking outside
+        formContainer.addEventListener('click', (e) => {
+            if (e.target === formContainer) {
+                closeForm();
+            }
+        });
+    }
 }
 
 function initializeBackgroundInteraction() {
