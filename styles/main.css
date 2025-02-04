@@ -83,8 +83,8 @@ body.fading::before {
 }
 
 .sacred-geometry {
-    width: 288px;
-    height: 288px;
+    width: 303px;
+    height: 303px;
     position: relative;
     animation: rotate 60s linear infinite, fadeIn 2s forwards;
     margin-bottom: 0;
@@ -934,8 +934,8 @@ html {
     }
 
     .sacred-geometry {
-        width: 288px;
-        height: 288px;
+        width: 303px;
+        height: 303px;
         margin-bottom: 1rem;
     }
 
@@ -996,8 +996,8 @@ html {
 
 @media (max-width: 480px) {
     .sacred-geometry {
-        width: 288px;
-        height: 288px;
+        width: 303px;
+        height: 303px;
     }
 
     .title-primary {
@@ -1047,8 +1047,8 @@ html {
 /* Portrait phones */
 @media (max-width: 380px) {
     .sacred-geometry {
-        width: 222px;
-        height: 222px;
+        width: 288px;
+        height: 288px;
     }
 
     .landing-container {
@@ -1073,8 +1073,8 @@ html {
     }
 
     .sacred-geometry {
-        width: 222px;
-        height: 222px;
+        width: 288px;
+        height: 288px;
         margin-bottom: 0.5rem;
     }
 
