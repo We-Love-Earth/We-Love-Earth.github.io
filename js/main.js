@@ -45,12 +45,13 @@ function createCircle(cx, cy, r) {
     circle.setAttribute("fill", "none");
     circle.setAttribute("stroke", "#d4af37");
     circle.setAttribute("stroke-width", "1");
+    circle.classList.add("sacred-circle");
     
     // Add drawing animation
     const length = 2 * Math.PI * r;
     circle.style.strokeDasharray = length;
     circle.style.strokeDashoffset = length;
-    circle.style.animation = "drawCircle 2s ease-out forwards";
+    circle.style.animation = `drawCircle 2s forwards, pulseLineWidth 4s infinite`;
     
     return circle;
 }
@@ -245,13 +246,30 @@ function initializeBackgroundInteraction() {
     document.addEventListener('touchcancel', handleInteractionEnd);
 }
 
-// Add CSS animation for circle drawing
+// Add CSS animation for circle drawing and line thickness
 const style = document.createElement('style');
 style.textContent = `
     @keyframes drawCircle {
         to {
             stroke-dashoffset: 0;
         }
+    }
+    
+    @keyframes pulseLineWidth {
+        0% {
+            stroke-width: 1;
+        }
+        50% {
+            stroke-width: 2;
+        }
+        100% {
+            stroke-width: 1;
+        }
+    }
+    
+    .sacred-circle {
+        transform-origin: center;
+        animation: pulseLineWidth 4s infinite ease-in-out;
     }
     
     .sacred-geometry svg circle {
