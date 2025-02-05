@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Create stars
+    createStars();
+    
     // Create and animate Seed of Life
     createSeedOfLife();
     
@@ -244,6 +247,33 @@ function initializeBackgroundInteraction() {
     // Leave/cancel events
     document.addEventListener('mouseleave', handleInteractionEnd);
     document.addEventListener('touchcancel', handleInteractionEnd);
+}
+
+function createStars() {
+    const constellation = document.createElement('div');
+    constellation.className = 'constellation';
+    document.body.appendChild(constellation);
+
+    // Create more stars and vary their properties
+    for (let i = 0; i < 150; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random position
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        
+        // Random size (smaller range for more realistic stars)
+        const size = 1 + Math.random() * 1.5;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        
+        // Random animation delay and duration
+        star.style.animationDelay = `${Math.random() * 3}s`;
+        star.style.animationDuration = `${1 + Math.random() * 2}s`;
+        
+        constellation.appendChild(star);
+    }
 }
 
 // Add CSS animation for circle drawing and line thickness

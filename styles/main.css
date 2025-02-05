@@ -80,6 +80,29 @@ body.fading::before {
     justify-content: center;
     align-items: center;
     padding-bottom: 15vh;
+    z-index: 1;
+}
+
+.earth-transition {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    margin-top: -15vh;
+    z-index: 2;
+    background: linear-gradient(to bottom, transparent, rgb(11, 0, 27) 30%);
+}
+
+.earth-image {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 120%;
+    background-image: url('../images/Earth.png');
+    background-size: cover;
+    background-position: top center;
+    z-index: 1;
+    pointer-events: none;
 }
 
 .sacred-geometry {
@@ -144,6 +167,8 @@ body.fading::before {
 }
 
 .pillars {
+    position: relative;
+    z-index: 2;
     display: flex;
     justify-content: space-around;
     align-items: stretch;
@@ -151,7 +176,7 @@ body.fading::before {
     gap: 2rem;
     max-width: 1400px;
     margin: 0 auto;
-    margin-top: -15vh;
+    padding-top: 25vh;
 }
 
 .pillar {
@@ -924,9 +949,14 @@ html {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .earth-image {
+        height: 130%;
+    }
+    
     .pillars {
         flex-direction: column;
         padding: 2rem 1rem;
+        padding-top: 20vh;
     }
 
     .pillar {
@@ -997,6 +1027,14 @@ html {
 }
 
 @media (max-width: 480px) {
+    .earth-image {
+        height: 140%;
+    }
+    
+    .pillars {
+        padding-top: 15vh;
+    }
+
     .sacred-geometry {
         width: 303px;
         height: 303px;
@@ -1249,5 +1287,41 @@ html {
     100% {
         transform: scale(0.8);
         opacity: 0.5;
+    }
+}
+
+.constellation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle 1s infinite alternate;
+    opacity: 0;
+}
+
+@keyframes twinkle {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1.2);
+        box-shadow: 0 0 4px #fff;
     }
 }
