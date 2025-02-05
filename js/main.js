@@ -254,26 +254,183 @@ function createStars() {
     constellation.className = 'constellation';
     document.body.appendChild(constellation);
 
-    // Create more stars and vary their properties
+    // Create canvas for drawing lines
+    const canvas = document.createElement('canvas');
+    canvas.className = 'constellation-canvas';
+    constellation.appendChild(canvas);
+    
+    // Array to store star positions
+    const stars = [];
+    
+    // Create stars
     for (let i = 0; i < 150; i++) {
         const star = document.createElement('div');
         star.className = 'star';
         
         // Random position
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.top = `${Math.random() * 100}%`;
+        const left = Math.random() * 100;
+        const top = Math.random() * 100;
+        star.style.left = `${left}%`;
+        star.style.top = `${top}%`;
         
-        // Random size (smaller range for more realistic stars)
+        // Random size
         const size = 1 + Math.random() * 1.5;
         star.style.width = `${size}px`;
         star.style.height = `${size}px`;
         
-        // Random animation delay and duration
+        // Random animation
         star.style.animationDelay = `${Math.random() * 3}s`;
         star.style.animationDuration = `${1 + Math.random() * 2}s`;
         
         constellation.appendChild(star);
+        
+        // Store star data
+        stars.push({
+            element: star,
+            x: left,
+            y: top,
+            size: size
+        });
     }
+
+    // Initialize canvas
+    function initCanvas() {
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        return ctx;
+    }
+
+    // Draw lines between stars
+    function drawConstellationLines(mouseX, mouseY) {
+        const ctx = initCanvas();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Convert mouse position to percentage
+        const mouseXPercent = (mouseX / window.innerWidth) * 100;
+        const mouseYPercent = (mouseY / window.innerHeight) * 100;
+        
+        // Keep track of connections per star
+        const connections = new Map();
+        
+        // Draw lines between nearby stars
+        stars.forEach((star1) => {
+            // Calculate distance to mouse
+            const distToMouse = Math.hypot(
+                mouseXPercent - star1.x,
+                mouseYPercent - star1.y
+            );
+            
+            // Only process stars near the mouse
+            if (distToMouse < 20) {
+                // Find all potential connections
+                const potentialConnections = stars
+                    .filter(star2 => star1 !== star2)
+                    .map(star2 => {
+                        const dist = Math.hypot(
+                            star1.x - star2.x,
+                            star1.y - star2.y
+                        );
+                        
+                        if (dist < 15 && dist > 0) {
+                            // Calculate angle between stars
+                            const angle = Math.atan2(
+                                star2.y - star1.y,
+                                star2.x - star1.x
+                            );
+                            
+                            return {
+                                star: star2,
+                                dist,
+                                angle
+                            };
+                        }
+                        return null;
+                    })
+                    .filter(conn => conn !== null)
+                    .sort((a, b) => a.dist - b.dist);
+                
+                // Select up to 4 connections with best angular distribution
+                if (potentialConnections.length > 0) {
+                    const selectedConnections = [];
+                    const MAX_CONNECTIONS = 4;
+                    
+                    // Always add the closest connection
+                    selectedConnections.push(potentialConnections[0]);
+                    
+                    // Add remaining connections based on angular distribution
+                    for (const conn of potentialConnections.slice(1)) {
+                        // Check if this connection would create good angular distribution
+                        const isGoodDistribution = selectedConnections.every(existing => {
+                            const angleDiff = Math.abs(existing.angle - conn.angle);
+                            return angleDiff > Math.PI / 4; // Minimum 45 degrees apart
+                        });
+                        
+                        if (isGoodDistribution) {
+                            selectedConnections.push(conn);
+                            if (selectedConnections.length >= MAX_CONNECTIONS) break;
+                        }
+                    }
+                    
+                    // Draw selected connections
+                    selectedConnections.forEach(conn => {
+                        const star2 = conn.star;
+                        const connectionKey = [star1.x, star1.y, star2.x, star2.y].join(',');
+                        const reverseKey = [star2.x, star2.y, star1.x, star1.y].join(',');
+                        
+                        // Only draw if connection hasn't been drawn yet
+                        if (!connections.has(connectionKey) && !connections.has(reverseKey)) {
+                            // Convert percentage positions to pixel positions
+                            const x1 = (star1.x * window.innerWidth) / 100;
+                            const y1 = (star1.y * window.innerHeight) / 100;
+                            const x2 = (star2.x * window.innerWidth) / 100;
+                            const y2 = (star2.y * window.innerHeight) / 100;
+                            
+                            // Calculate line opacity based on distance
+                            const opacity = 1 - (conn.dist / 15);
+                            const mouseOpacity = 1 - (distToMouse / 20);
+                            
+                            ctx.beginPath();
+                            ctx.moveTo(x1, y1);
+                            ctx.lineTo(x2, y2);
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * mouseOpacity * 0.5})`;
+                            ctx.lineWidth = 0.2;
+                            ctx.stroke();
+                            
+                            // Mark connection as drawn
+                            connections.set(connectionKey, true);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    // Handle mouse movement
+    let mouseX = 0, mouseY = 0;
+    let animationFrame;
+    
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(() => {
+                drawConstellationLines(mouseX, mouseY);
+                animationFrame = null;
+            });
+        }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(() => {
+                drawConstellationLines(mouseX, mouseY);
+                animationFrame = null;
+            });
+        }
+    });
 }
 
 // Add CSS animation for circle drawing and line thickness
