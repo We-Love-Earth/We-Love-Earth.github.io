@@ -89,6 +89,7 @@ body.fading::before {
     width: 100%;
     margin-top: -15vh;
     z-index: 2;
+    top: 30px; /* Default for desktop */
 }
 
 .earth-image {
@@ -998,7 +999,7 @@ html {
     }
 
     .access-button {
-        font-size: calc(14px + 0.5vw);
+        font-size: calc(16px + 0.5vw);
         padding: 0.8rem 1.5rem;
         margin-top: 1rem;
     }
@@ -1062,7 +1063,7 @@ html {
     }
 
     .access-button {
-        font-size: calc(12px + 0.5vw);
+        font-size: calc(14px + 0.5vw);
         padding: 0.7rem 1.3rem;
     }
 
@@ -1331,5 +1332,39 @@ html {
         opacity: 1;
         transform: scale(1.2);
         box-shadow: 0 0 4px #fff;
+    }
+}
+
+@media (max-width: 1024px) {
+    .earth-transition {
+        top: 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    .earth-transition {
+        top: 220px;
+    }
+    
+    .earth-image {
+        height: 130%;
+    }
+    
+    .pillars {
+        padding-top: 20vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .earth-transition {
+        top: 270px;
+    }
+    
+    .earth-image {
+        height: 140%;
+    }
+    
+    .pillars {
+        padding-top: 15vh;
     }
 }
