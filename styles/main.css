@@ -1005,9 +1005,7 @@ html {
     }
 
     .sacred-form-container {
-        width: 90%;
-        max-width: 400px;
-        padding: 1.5rem;
+        width: 100%;
     }
 
     .sacred-form input {
@@ -1149,9 +1147,7 @@ html {
     }
 
     .sacred-form-container {
-        width: 90%;
-        max-width: 400px;
-        padding: 1.2rem;
+        width: 100%;
     }
 
     .sacred-form input {
