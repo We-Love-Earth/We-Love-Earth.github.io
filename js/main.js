@@ -1,20 +1,19 @@
+/**
+ * Main initialization sequence
+ * 1. Visual effects
+ * 2. User interactions
+ * 3. Background processes
+ */
 document.addEventListener('DOMContentLoaded', () => {
-    // Create stars
+    // Section 1: Visual effects
     createStars();
-    
-    // Create and animate Seed of Life
     createSeedOfLife();
     
-    // Initialize typing effect
+    // Section 2: User interactions
     initializeTypingEffect();
-    
-    // Initialize parallax effect
     initializeParallax();
     
-    // Initialize sacred access
-    initializeSacredAccess();
-    
-    // Initialize background interaction
+    // Section 3: Background processes
     initializeBackgroundInteraction();
 });
 
@@ -139,62 +138,6 @@ function initializeParallax() {
         document.querySelector('.sacred-geometry').style.transform = 
             `translate3d(0, ${scrolled * 0.5}px, 0)`;
     });
-}
-
-function initializeSacredAccess() {
-    const accessButton = document.querySelector('.access-button');
-    const formContainer = document.querySelector('.sacred-form-container');
-    const closeButton = document.querySelector('.close-form-btn');
-    const sacredGeometry = document.querySelector('.sacred-geometry');
-    const sacredForm = document.querySelector('.sacred-form');
-
-    if (accessButton && formContainer) {
-        accessButton.addEventListener('click', () => {
-            // Start portal animation
-            sacredGeometry.classList.add('portal-active');
-            
-            // Trigger background effect
-            document.body.classList.add('touching');
-            
-            // After portal animation, show form container with fade
-            setTimeout(() => {
-                document.body.classList.add('form-open');
-                formContainer.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-                
-                // Add a small delay before starting form animation
-                setTimeout(() => {
-                    formContainer.classList.add('form-visible');
-                    sacredForm.classList.add('form-active');
-                }, 100);
-            }, 2000); // Wait for portal animation
-        });
-    }
-
-    if (closeButton) {
-        const closeForm = () => {
-            sacredForm.classList.remove('form-active');
-            formContainer.classList.remove('form-visible');
-            
-            // Wait for fade out animation before hiding
-            setTimeout(() => {
-                document.body.classList.remove('touching', 'form-open');
-                formContainer.style.display = 'none';
-                document.body.style.overflow = '';
-                // Reset portal animation
-                sacredGeometry.classList.remove('portal-active');
-            }, 500);
-        };
-
-        closeButton.addEventListener('click', closeForm);
-
-        // Close form when clicking outside
-        formContainer.addEventListener('click', (e) => {
-            if (e.target === formContainer) {
-                closeForm();
-            }
-        });
-    }
 }
 
 function initializeBackgroundInteraction() {
