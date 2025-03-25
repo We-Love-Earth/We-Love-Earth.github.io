@@ -1,0 +1,27 @@
+[build]
+  base = "."
+  publish = "luna-frontend/dist"
+  command = "cd luna-frontend && npm install && npm run build"
+  functions = "netlify/functions"
+
+[dev]
+  command = "cd luna-frontend && npm run dev"
+  port = 3000
+  targetPort = 3000
+  publish = "luna-frontend/dist"
+  autoLaunch = true
+  framework = "vite"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["mongodb"]
